@@ -90,6 +90,38 @@ Isolating logic ensures clarity, reduces duplication, and improves maintainabili
 - Utility-first styling for consistency
 - Sleek buttons, inputs, and status indicators
 
+---
+
+## Testing Summary
+
+- Character toggles work as intended  
+- Length validation and clamping confirmed  
+- Strength values respond correctly  
+- Copy-to-clipboard works across major browsers  
+- UI behaves correctly on multiple resolutions  
+- Tailwind v4 fully functional with PostCSS pipeline  
+
+---
+
+## Development Notes
+
+- Modular architecture separating UI and logic  
+- Tailwind v4 import system used (`@import "tailwindcss";`)  
+- React functional components built with Hooks  
+- Clean commit history documenting development stages  
+- Designed for clarity, maintainability, and client demonstration  
+
+---
+
+## Potential Future Enhancements
+
+- Visual strength indicator bar  
+- Preset generation profiles (e.g., "Strong", "Max Security")  
+- Regenerate button with icon  
+- Export password list option  
+- Pronounceable password mode  
+
+
 ### Layout Features
 - Centered full-screen container
 - Rounded card wrapper
