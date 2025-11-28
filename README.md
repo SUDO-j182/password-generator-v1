@@ -1,16 +1,106 @@
-# React + Vite
+# React Password Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully modernised password generator built with React and Vite, providing configurable password creation, strength evaluation, and clipboard support. The interface uses Tailwind CSS for a clean, responsive, and professional appearance.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Status:** COMPLETE  
+**Last Updated:** November 2025
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend Framework:** React (Vite)
+- **Styling:** Tailwind CSS v4
+- **Build & Tooling:** Vite
+- **Password Logic:** Custom utility module
+- **Clipboard Support:** `navigator.clipboard`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Feature Coverage
+
+| Feature                                                                | Status        |
+|-------------------------------------------------------------------------|---------------|
+| Password generation with multiple character options                     | Implemented   |
+| Length selection with validation and clamping                           | Implemented   |
+| Strength evaluation (weak / medium / strong)                            | Implemented   |
+| Copy-to-clipboard functionality                                         | Implemented   |
+| Component-based React architecture                                      | Implemented   |
+| Logic extraction into separate modules                                  | Implemented   |
+| Tailwind-styled responsive interface                                    | Implemented   |
+| Clean project structure                                                 | Implemented   |
+| Documentation                                                           | Included      |
+
+---
+
+## Functional Overview
+
+### Character Options
+Users may enable or disable:
+- Lowercase characters  
+- Uppercase characters  
+- Numbers  
+- Symbols  
+
+Length is adjustable between **6 and 64 characters**, with input clamping to prevent invalid values.
+
+### Strength Evaluation
+Passwords are analysed using a simple scoring algorithm based on:
+- Length brackets  
+- Number of enabled character types  
+- Overall entropy indicators  
+
+Strength outputs:
+- **weak**  
+- **medium**  
+- **strong**
+
+### Clipboard Support
+Passwords can be copied using the browser’s native Clipboard API.  
+A brief status indicator (“Copied!”) confirms the action.
+
+---
+
+## Code Structure
+
+### Components
+**`PasswordGenerator.jsx`**
+- Main interface
+- Input controls and toggles
+- Generation & copy actions
+- Display of password and strength score
+- Tailwind classes applied for styling
+
+### Utilities
+**`passwordUtils.js`**
+- `generatePassword(options)`
+- `calculateStrength(password, options)`
+
+Isolating logic ensures clarity, reduces duplication, and improves maintainability.
+
+---
+
+## UI / Styling
+
+### Tailwind CSS v4
+- Simple, modern dark UI
+- Responsive card-based layout
+- Utility-first styling for consistency
+- Sleek buttons, inputs, and status indicators
+
+### Layout Features
+- Centered full-screen container
+- Rounded card wrapper
+- Mono-spaced password output
+- Clear spacing and structure
+
+---
+
+## Running the Project
+
+```bash
+npm install
+npm run dev
+
