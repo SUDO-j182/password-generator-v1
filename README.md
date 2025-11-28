@@ -96,11 +96,3 @@ Isolating logic ensures clarity, reduces duplication, and improves maintainabili
 - Mono-spaced password output
 - Clear spacing and structure
 
----
-
-## Running the Project
-
-```bash
-npm install
-npm run dev
-
