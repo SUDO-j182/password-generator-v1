@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { generatePassword, calculateStrength } from "../utils/passwordUtils";
 
 function PasswordGenerator() {
   const [length, setLength] = useState(12);
@@ -11,16 +12,56 @@ function PasswordGenerator() {
   const [copied, setCopied] = useState(false);
 
   const handleGeneratePassword = () => {
-    console.log("Generate clicked");
-    // we'll add real generation logic here next
+    if (
+      !includeLowercase &&
+      !includeUppercase &&
+      !includeNumbers &&
+      !includeSymbols
+    ) {
+      setPassword("");
+      setStrength("weak");
+      return;
+    }
+  
+    const effectiveLength =
+      typeof length === "number" && !Number.isNaN(length) ? length : 6;
+  
+    const options = {
+      length: effectiveLength,
+      includeLowercase,
+      includeUppercase,
+      includeNumbers,
+      includeSymbols,
+    };
+  
+    const newPassword = generatePassword(options);
+    const newStrength = calculateStrength(newPassword, options);
+  
+    setPassword(newPassword);
+    setStrength(newStrength);
+    setCopied(false);
+  };
+  
+  const handleCopyPassword = () => {
+    if (!password) return;
+
+    navigator.clipboard
+      .writeText(password)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      })
+      .catch((error) => {
+        console.error("Failed to copy password:", error);
+        setCopied(false);
+      });
   };
 
   return (
-    <div>
+    <div className="password-generator">
       <h2>Secure Password Generator</h2>
-
-      {/* Length control */}
-      <div>
+  
+      <section className="options">
         <label>
           Length:
           <input
@@ -28,15 +69,33 @@ function PasswordGenerator() {
             min={6}
             max={64}
             value={length}
-            onChange={(event) => setLength(Number(event.target.value))}
+            onChange={(event) => {
+                const rawValue = event.target.value;
+              
+                // If the field is cleared (empty string), don't force anything yet
+                if (rawValue === "") {
+                  setLength("");
+                  return;
+                }
+              
+                let value = Number(rawValue);
+              
+                // Reject NaN (shouldn't happen with type=number, but safe)
+                if (Number.isNaN(value)) {
+                  return;
+                }
+              
+                // Clamp between 6 and 64
+                if (value < 6) value = 6;
+                if (value > 64) value = 64;
+              
+                setLength(value);
+              }}              
           />
         </label>
-      </div>
-
-      {/* Character options */}
-      <div>
+  
         <h3>Character options</h3>
-
+  
         <label>
           <input
             type="checkbox"
@@ -45,7 +104,7 @@ function PasswordGenerator() {
           />
           Include lowercase
         </label>
-
+  
         <label>
           <input
             type="checkbox"
@@ -54,7 +113,7 @@ function PasswordGenerator() {
           />
           Include uppercase
         </label>
-
+  
         <label>
           <input
             type="checkbox"
@@ -63,7 +122,7 @@ function PasswordGenerator() {
           />
           Include numbers
         </label>
-
+  
         <label>
           <input
             type="checkbox"
@@ -72,20 +131,25 @@ function PasswordGenerator() {
           />
           Include symbols
         </label>
-      </div>
-
-      {/* Actions */}
-      <div>
+      </section>
+  
+      <section className="actions">
         <button onClick={handleGeneratePassword}>
           Generate Password
         </button>
-      </div>
-
-      {/* Output */}
-      <div>
-        <p>Password: {password || "—"}</p>
-        <p>Strength: {strength || "N/A"}</p>
-      </div>
+  
+        <button
+          onClick={handleCopyPassword}
+          disabled={!password}
+        >
+          {copied ? "Copied!" : "Copy"}
+        </button>
+      </section>
+  
+      <section className="output">
+        <p><strong>Password:</strong> {password || "—"}</p>
+        <p><strong>Strength:</strong> {strength || "N/A"}</p>
+      </section>
     </div>
   );
 }
